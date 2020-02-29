@@ -9,16 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import io.reactivex.Observable;
 
-public class DeferOperatorActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        doSomeWork();
-    }
-
+public class DeferOperatorActivity extends BaseOperatorActivity {
     @SuppressLint("CheckResult")
-    private void doSomeWork() {
+    protected void doSomeWork() {
         Car car = new Car();
 
         Observable defaultObservable = car.getDefaultObservable();
@@ -28,14 +21,14 @@ public class DeferOperatorActivity extends AppCompatActivity {
 
         defaultObservable.subscribe(brand -> {
             try {
-                Log.d("myLog", String.valueOf(brand));
+                showLog(brand);
             } catch (Exception e) {
 
             }
         });
         deferObservable.subscribe(brand -> {
             try {
-                Log.d("myLog", String.valueOf(brand));
+                showLog(brand);
             } catch (Exception e) {
 
             }

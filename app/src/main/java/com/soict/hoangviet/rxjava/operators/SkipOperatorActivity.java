@@ -1,33 +1,28 @@
 package com.soict.hoangviet.rxjava.operators;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.util.Log;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
-public class FilterOperatorActivity extends BaseOperatorActivity {
-    @SuppressLint("CheckResult")
+public class SkipOperatorActivity extends BaseOperatorActivity {
+    @Override
     protected void doSomeWork() {
         getObservable()
-                .filter(integer -> integer % 2 == 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result -> {
-                    showLog(result);
+                .skip(2)
+                .subscribe(response -> {
+                    showLog(response);
                 }, throwable -> {
                     handleThrowable(throwable);
                 });
-
     }
 
     private Observable<Integer> getObservable() {
-        return Observable.just(1, 2, 3, 4, 5, 6);
+        return Observable.defer(() -> Observable.just(1, 2, 3, 4, 5, 6));
     }
 }

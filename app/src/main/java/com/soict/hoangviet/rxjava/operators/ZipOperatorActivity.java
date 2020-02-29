@@ -1,11 +1,7 @@
 package com.soict.hoangviet.rxjava.operators;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.util.Log;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.soict.hoangviet.rxjava.model.User;
 
@@ -13,15 +9,9 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class ZipOperatorActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        doSomeWork();
-    }
-
+public class ZipOperatorActivity extends BaseOperatorActivity {
     @SuppressLint("CheckResult")
-    private void doSomeWork() {
+    protected void doSomeWork() {
         Observable.zip(getFullNameObservable(), getAgeObservable(),
                 (fullName, age) -> new User(fullName, age))
                 .subscribeOn(Schedulers.io())
@@ -30,7 +20,7 @@ public class ZipOperatorActivity extends AppCompatActivity {
                     Log.d("myLog", user.getFullName());
                     Log.d("myLog", String.valueOf(user.getAge()));
                 }, throwable -> {
-                    Log.e("myLog", throwable.getMessage());
+                    handleThrowable(throwable);
                 });
     }
 

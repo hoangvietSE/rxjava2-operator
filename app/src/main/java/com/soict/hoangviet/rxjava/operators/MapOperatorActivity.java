@@ -11,26 +11,19 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MapOperatorActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        doSomeWork();
-    }
-
+public class MapOperatorActivity extends BaseOperatorActivity {
     @SuppressLint("CheckResult")
-    private void doSomeWork() {
+    protected void doSomeWork() {
         getObservable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(integer -> String.valueOf(integer))
                 .subscribe(
                         response -> {
-                            Log.d("myLog", response);
+                            showLog(response);
                         },
                         throwable -> {
-                            Log.e("myLog", throwable.getMessage());
+                            handleThrowable(throwable);
                         }
                 );
     }

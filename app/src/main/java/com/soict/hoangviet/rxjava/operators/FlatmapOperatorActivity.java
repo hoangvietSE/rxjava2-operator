@@ -13,23 +13,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class FlatmapOperatorActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        doSomeWork();
-    }
-
+public class FlatmapOperatorActivity extends BaseOperatorActivity {
     @SuppressLint("CheckResult")
-    private void doSomeWork() {
+    protected void doSomeWork() {
         getAgeObservable()
                 .flatMap((Function<Integer, ObservableSource<String>>) age -> getFullNameObservable(age))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
-                    Log.d("myLog", response);
+                    showLog(response);
                 }, throwable -> {
-                    Log.e("myLog", throwable.getMessage());
+                    handleThrowable(throwable);
                 });
     }
 
